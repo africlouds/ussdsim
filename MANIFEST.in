@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include ussdsim *.css
+recursive-include ussdsim *.csv
+recursive-include ussdsim *.html
+recursive-include ussdsim *.ico
+recursive-include ussdsim *.js
+recursive-include ussdsim *.json
+recursive-include ussdsim *.md
+recursive-include ussdsim *.png
+recursive-include ussdsim *.py
+recursive-include ussdsim *.svg
+recursive-include ussdsim *.txt
+recursive-exclude ussdsim *.pyc
