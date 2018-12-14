@@ -39,7 +39,61 @@
 	}
 
 </style>
+
+    {% block favicon %}
+        <link rel="shortcut icon"
+                href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
+                type="image/x-icon">
+        <link rel="icon"
+                href="{{ (favicon or "/assets/frappe/images/favicon.png") | abs_url }}"
+                type="image/x-icon">
+    {% endblock %}
+        {%- block head -%}
+                {% if meta_block is defined -%}
+                {{ meta_block }}
+                {%- endif %}
+
+                {% if head_html is defined -%}
+                {{ head_html or "" }}
+                {%- endif %}
+
+                {%- for link in web_include_css %}
+                <link type="text/css" rel="stylesheet" href="{{ link|abs_url }}">
+                {%- endfor -%}
+
+            {%- block head_include %}{{ head_include or "" }}{% endblock -%}
+
+                {%- block style %}{%- endblock -%}
+        {%- endblock -%}
+	<script>
+		window.frappe = {};
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = {{ dev_server }};
+	</script>
+</head>
 <body>
 {% block content%}{% endblock %}
+<!-- js should be loaded in body! -->
+	<script type="text/javascript"
+		src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/frappe-web.min.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/js/erpnext-web.min.js"></script>
+    <script></script>
+
+
+	<script>frappe.csrf_token = "None";</script>
+	<script>
+        {% include "ussdsim/templates/includes/ussdsim.js" %}
+        frappe.ready(function() {
+                ussdsim($('#outer'));
+        });
+	</script>
+
 </body>
 </html>
