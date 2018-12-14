@@ -12,7 +12,9 @@ def query(query):
 			frappe.throw("Invalid code")
 		int(code)
 		code = frappe.get_doc("USSD Code", code)
-		r = requests.get(code.end_point + "?query=" + query).json()
+		s = requests.Session()
+		r = s.post('http://uoh.africlouds.com:8000/api/method/login', data = {'usr':'administrator', 'pwd':'frappe'})
+		r = s.get(code.end_point + "?query=" + query).json()
 		msg = r['message']
 		resp = {
 			'ref': msg.split(":")[0].split(",")[0],
