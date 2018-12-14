@@ -13,6 +13,12 @@ def query(query):
 		int(code)
 		code = frappe.get_doc("USSD Code", code)
 		r = requests.get(code.end_point + "?query=" + query).json()
-		return r['message']
+		msg = r['message']
+		resp = {
+			'ref': msg.split(":")[0].split(",")[0],
+			'message': msg.split(":")[0].split(",")[1], 
+			'options': msg.split(":")[1].split(",")
+		}
+		return resp
 	except Exception as e:
 		frappe.throw(str(e))

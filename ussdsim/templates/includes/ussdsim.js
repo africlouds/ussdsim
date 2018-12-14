@@ -10,7 +10,8 @@ ussdsim  = function(page) {
 				var message = data.message.message
 				var options = "<div><ol>";
 				data.message.options.forEach(function(option){
-					options += "<li>" + option + "</li>";
+					if(option.trim() != "")
+						options += "<li>" + option + "</li>";
 				})
 				options += "</ol></div>"
 				message += options
