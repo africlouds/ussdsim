@@ -12,8 +12,9 @@ def query(query):
 			frappe.throw("Invalid code")
 		int(code)
 		code = frappe.get_doc("USSD Code", code)
+		print(code.end_point_username)
 		s = requests.Session()
-		r = s.post('http://uoh.africlouds.com:8000/api/method/login', data = {'usr':'administrator', 'pwd':'frappe'})
+		r = s.post(code.end_point_login_url, data = {'usr':code.end_point_username, 'pwd':code.end_point_password})
 		r = s.get(code.end_point + "?query=" + query).json()
 		msg = r['message']
 		resp = {
