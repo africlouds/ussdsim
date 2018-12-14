@@ -6,10 +6,10 @@ import requests
 def query(query):
 	if not query or query[0] != "*"  or query[-1] != "#":
 		frappe.throw("Invalid format")
-	code = query[:-1].split("*")[1]
-	if len(code) != 3:
-		frappe.throw("Invalid code")
 	try:
+		code = query[:-1].split("*")[1]
+		if len(code) != 3:
+			frappe.throw("Invalid code")
 		int(code)
 		code = frappe.get_doc("USSD Code", code)
 		r = requests.get(code.end_point + "?query=" + query).json()
