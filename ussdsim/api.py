@@ -10,9 +10,7 @@ def query(query):
 		code = query[:-1].split("*")[1]
 		if len(code) != 3:
 			frappe.throw("Invalid code")
-		int(code)
 		code = frappe.get_doc("USSD Code", code)
-		print(code.end_point_username)
 		s = requests.Session()
 		r = s.post(code.end_point_login_url, data = {'usr':code.end_point_username, 'pwd':code.end_point_password})
 		r = s.get(code.end_point + "?query=" + query).json()
